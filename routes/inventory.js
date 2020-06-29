@@ -20,9 +20,10 @@ router.get('/:id', getSingleInventory, (req, res) => {
     res.json(res.inventory)
 })
 
-router.post('/', (req, res) => {
-
-})
+router.post('/', (req, res, next) => {
+    req.inventory = new Inventory()
+    next()
+}, saveInventory())
 
 router.put('/:id', (req, res) => {
 
@@ -32,6 +33,23 @@ router.delete('/:id', (req, res) => {
 
 })
 
+
+function saveInventory(){
+    return async(req, res) => {
+        let inventory = req.inventory
+
+        inventory.name = req.body.name
+        inventory.inventoryType = req.body.inventoryType
+        inventory.buyingPrice = req.body.buyingPrice
+        inventory.sellingPrice = req.body.sellingPrice
+        try {
+            await inventory.save()
+            res.json(inventory)
+        } catch (error) {
+            res.status(500).json({ message:error.message })
+        }
+    }
+}
 
 async function getSingleInventory(req, res, next) {
     let inventory
