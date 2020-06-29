@@ -25,12 +25,14 @@ app.use(express.json());
 
 // -------------------- Routes registration ------------------------
 const inventoryRouter = require('./routes/inventory')
+const stockRouter = require('./routes/stock')
 
 // Routes
 app.get('/customers', (req, res) => {
     res.json({ message: 'Welcome to swagger'})
 })
 app.use('/inventory', inventoryRouter)
+app.use('/stock', stockRouter)
 // -------------------- Routes registration ------------------------
 
 const PORT = process.env.PORT || 3000;

@@ -16,6 +16,11 @@ const inventorySchema = new mongoose.Schema({
     },
     sellingPrice:{
         type:Number
+    },
+    createdAt:{
+        type:Date,
+        default:Date.now,
+        required:true
     }
 })
 
