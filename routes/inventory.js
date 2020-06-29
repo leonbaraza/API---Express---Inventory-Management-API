@@ -25,9 +25,11 @@ router.post('/', (req, res, next) => {
     next()
 }, saveInventory())
 
-router.put('/:id', (req, res) => {
-
-})
+router.put('/:id', getSingleInventory, (req, res, next) => {
+    console.log(res.inventory)
+    req.inventory = res.inventory
+    next()
+}, saveInventory())
 
 router.delete('/:id', (req, res) => {
 
@@ -37,7 +39,7 @@ router.delete('/:id', (req, res) => {
 function saveInventory(){
     return async(req, res) => {
         let inventory = req.inventory
-
+        console.log(req.body.name)
         inventory.name = req.body.name
         inventory.inventoryType = req.body.inventoryType
         inventory.buyingPrice = req.body.buyingPrice
