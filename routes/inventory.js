@@ -26,20 +26,22 @@ router.post('/', (req, res, next) => {
 }, saveInventory())
 
 router.put('/:id', getSingleInventory, (req, res, next) => {
-    console.log(res.inventory)
     req.inventory = res.inventory
     next()
 }, saveInventory())
 
-router.delete('/:id', (req, res) => {
-
+router.delete('/:id', getSingleInventory, async(req, res) => {
+    try {
+        await res.inventory.remove()
+        res.json({ message: "Inventory removed" })
+    } catch (error) {
+        res.status(500).json({ message: error.message })
+    }
 })
-
 
 function saveInventory(){
     return async(req, res) => {
         let inventory = req.inventory
-        console.log(req.body.name)
         inventory.name = req.body.name
         inventory.inventoryType = req.body.inventoryType
         inventory.buyingPrice = req.body.buyingPrice
