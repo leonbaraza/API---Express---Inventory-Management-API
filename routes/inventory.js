@@ -16,8 +16,8 @@ router.get('/', async (req, res) => {
     }
 })
 
-router.get('/:id', (req, res) => {
-
+router.get('/:id', getSingleInventory, (req, res) => {
+    res.json(res.inventory)
 })
 
 router.post('/', (req, res) => {
@@ -32,5 +32,19 @@ router.delete('/:id', (req, res) => {
 
 })
 
+
+async function getSingleInventory(req, res, next) {
+    let inventory
+    try {
+        inventory = await Inventory.findById(req.params.id)
+        if(inventory == null){
+            res.status(404).json({ message: `No inventory with id of ${req.params.id}`})
+        }
+    } catch (error) {
+        res.status(500).json({ message: error.message })
+    }
+    res.inventory = inventory
+    next()
+}
 
 module.exports = router
