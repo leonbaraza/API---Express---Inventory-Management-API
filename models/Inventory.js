@@ -17,13 +17,8 @@ const inventorySchema = new mongoose.Schema({
     },
     sellingPrice:{
         type:Number
-    },
-    createdAt:{
-        type:Date,
-        default:Date.now,
-        required:true
     }
-})
+}, {timestamps:true})
 
 inventorySchema.pre('remove', function(next) {
     Stock.find({inventory:this.id}, (err, inventory) => {

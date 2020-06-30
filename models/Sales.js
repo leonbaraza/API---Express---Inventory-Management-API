@@ -5,16 +5,11 @@ const salesSchema = new mongoose.Schema({
         type:Number,
         required:true
     },
-    createdAt:{
-        type:Date,
-        default:Date.now,
-        required:true
-    },
     inventory:{
         type:mongoose.Schema.Types.ObjectId,
         required:true,
         ref:'Inventory'
     }
-})
+}, {timestamps:true})
 
 module.exports = mongoose.model('Sales', salesSchema)
