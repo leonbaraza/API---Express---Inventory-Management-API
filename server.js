@@ -25,11 +25,13 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
 // -------------------- Routes registration ------------------------
+const authRouter = require('./routes/auth')
 const inventoryRouter = require('./routes/inventory')
 const stockRouter = require('./routes/stock')
 const salesRouter = require('./routes/sales')
 
 // Routes
+app.use('/', authRouter)
 app.use('/inventory', inventoryRouter)
 app.use('/stock', stockRouter)
 app.use('/sales', salesRouter)
