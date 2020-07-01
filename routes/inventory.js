@@ -1,9 +1,11 @@
 const express = require('express')
 const router = express.Router()
 
+const authenticate = require('../middlewares/authentication')
+
 const Inventory = require('./../models/Inventory')
 
-router.get('/', async (req, res) => {
+router.get('/', authenticate, async (req, res) => {
     searchOptions = {}
     if (req.query.name != null && req.query.name !== '') {
         searchOptions.name = new RegExp(req.query.name, 'i')

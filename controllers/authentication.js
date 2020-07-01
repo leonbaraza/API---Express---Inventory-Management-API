@@ -1,3 +1,7 @@
+if (process.env.NODE_ENV !== 'production') {
+    require('dotenv').config()
+}
+
 const User = require('../models/Users')
 const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
@@ -41,7 +45,7 @@ const login = (req, res, next) =>{
                     })
                 }
                 if (result) {
-                    let token = jwt.sign({name:user.name}, 'verySecretValue', {expiresIn:'1hr'})
+                    let token = jwt.sign({name:user.email}, process.env.SECRET_KEY, {expiresIn:'1hr'})
                     res.json({
                         message:'Login successful',
                         token
